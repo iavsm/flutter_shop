@@ -4,8 +4,6 @@ import 'package:flutter_shop/screens/product__overview_screen.dart';
 import 'package:flutter_shop/screens/product_detail_screen.dart';
 import 'package:provider/provider.dart';
 
-import 'Model/Product.dart';
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
