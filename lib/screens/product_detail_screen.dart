@@ -3,7 +3,6 @@ import 'package:flutter_shop/provider/product_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-
   static const routeName = "/ProductDetailScreen";
 
   @override
@@ -13,6 +12,37 @@ class ProductDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(product.title),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          child: Column(
+            children: <Widget>[
+              Container(
+                height: 300,
+                width: double.infinity,
+                child: Image.network(
+                  product.imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                product.title,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20, color: Colors.grey),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text("\$${product.price}",
+                style: TextStyle(),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
