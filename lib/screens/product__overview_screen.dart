@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_shop/provider/Cart.dart';
 import 'package:flutter_shop/provider/product_provider.dart';
+import 'package:flutter_shop/widgets/badge.dart';
 import 'package:flutter_shop/widgets/product_grid.dart';
 import 'package:provider/provider.dart';
 
@@ -14,37 +16,41 @@ class ProductOverviewScreen extends StatefulWidget {
 }
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
-
   bool _showFavorite = false;
 
   @override
   Widget build(BuildContext context) {
-
     final product = Provider.of<ProductProvider>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Shop"),
-        actions: <Widget>[
-          PopupMenuButton(
-              onSelected: (FilterOptions selectedValue) {
-                setState(() {
-                  if(selectedValue == FilterOptions.ShowFavorite) {
-                    _showFavorite = true;
-                  } else {
-                    _showFavorite = false;
-                  }
-                });
-              },
-              icon: Icon(Icons.more_vert),
-              itemBuilder: (_) => [
-                    PopupMenuItem(
-                        child: Text("Show favorite"),
-                        value: FilterOptions.ShowFavorite),
-                    PopupMenuItem(
-                        child: Text("Show All"), value: FilterOptions.ShowAll),
-                  ]),
-        ],
-      ),
+      appBar: AppBar(title: Text("Shop"), actions: <Widget>[
+        PopupMenuButton(
+            onSelected: (FilterOptions selectedValue) {
+              setState(() {
+                if (selectedValue == FilterOptions.ShowFavorite) {
+                  _showFavorite = true;
+                } else {
+                  _showFavorite = false;
+                }
+              });
+            },
+            icon: Icon(Icons.more_vert),
+            itemBuilder: (_) => [
+                  PopupMenuItem(
+                      child: Text("Show favorite"),
+                      value: FilterOptions.ShowFavorite),
+                  PopupMenuItem(
+                      child: Text("Show All"), value: FilterOptions.ShowAll),
+                ]),
+        Consumer<Cart>(
+          builder: (_, cartData, ch) => Badge(
+            child: ch,
+            value: cartData.itemCount.toString(),
+          ),
+          child: IconButton(
+            icon: Icon(Icons.shopping_cart),
+          ),
+        ),
+      ]),
       body: Container(
         child: ProductGrid(_showFavorite),
       ),
